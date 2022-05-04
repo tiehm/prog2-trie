@@ -25,7 +25,7 @@ public class Trie {
   }
 
   public boolean remove(String key) {
-    Node node = this.root.find(key);
+    Node node = root.find(key);
     if (node == null) {
       return false;
     }
@@ -34,7 +34,7 @@ public class Trie {
   }
 
   public boolean change(String key, Integer points) {
-    Node node = this.root.find(key);
+    Node node = root.find(key);
     if (node == null) {
       return false;
     }
@@ -43,7 +43,7 @@ public class Trie {
   }
 
   public Integer points(String key) {
-    Node node = this.root.find(key);
+    Node node = root.find(key);
     if (node == null) {
       return null;
     }
@@ -52,6 +52,6 @@ public class Trie {
 
   @Override
   public String toString() {
-    return this.root.toString();
+    return root.toString();
   }
 }

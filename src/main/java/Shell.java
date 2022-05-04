@@ -28,85 +28,115 @@ public class Shell {
       String[] tokens = line.split(" ");
 
       if (tokens.length == 0) {
-        System.out.println("Error!: invalid command");
+        printError("invalid command, see 'help' for more information");
         continue;
       }
 
       String command = tokens[0];
-      int pointsInt;
-      String name;
-      String points;
+
       switch (command) {
-        case "new":
-          trie = new Trie();
-          break;
-        case "add":
-          if (tokens.length != 3) {
-            System.out.println("Error!: invalid command");
-            continue;
-          }
-          name = tokens[1];
-          points = tokens[2];
-          try {
-            pointsInt = Integer.parseInt(points);
-          } catch (NumberFormatException e) {
-            System.out.println("Error!: invalid command");
-            continue;
-          }
-          trie.add(name, pointsInt);
-          break;
-        case "change":
-          if (tokens.length != 3) {
-            System.out.println("Error!: invalid command");
-            continue;
-          }
-          name = tokens[1];
-          points = tokens[2];
-
-          try {
-            pointsInt = Integer.parseInt(points);
-          } catch (NumberFormatException e) {
-            System.out.println("Error!: invalid command");
-            continue;
-          }
-          trie.change(name, pointsInt);
-          break;
-        case "delete":
-          if (tokens.length != 2) {
-            System.out.println("Error!: invalid command");
-            continue;
-          }
-          name = tokens[1];
-          trie.remove(name);
-          break;
-        case "points":
-          if (tokens.length != 2) {
-            System.out.println("Error!: invalid command");
-            continue;
-          }
-          name = tokens[1];
-          System.out.println(trie.points(name));
-          break;
-        case "trie":
-          System.out.println(trie.toString());
-          break;
-        case "help":
-          System.out.println("""
-            new - creates a new trie
-            add <name> <points> - adds a new name with the given points
-            change <name> <points> - changes the points of the given name
-            delete <name> - deletes the given name
-            points <name> - returns the points of the given name
-            trie - prints the trie
-            help - prints this help message
-            quit - quits the program
-              """);
-        case "quit":
-          quit = true;
-          break;
+        case "new" -> execNewCmd();
+        case "add" -> execAddCmd(tokens);
+        case "change" -> execChangeCmd(tokens);
+        case "delete" -> execDeleteCmd(tokens);
+        case "points" -> execPointsCmd(tokens);
+        case "trie" -> execTrieCmd();
+        case "help" -> execHelpCmd();
+        case "quit" -> quit = true;
+        default -> printError("invalid command, see 'help' for more information");
       }
-
     }
+  }
+
+  private static void execNewCmd() {
+    trie = new Trie();
+  }
+
+  private static void execAddCmd(String[] tokens) {
+    if (tokens.length != 3) {
+      printError("invalid command, see 'help' for more information");
+      return;
+    }
+    String name = tokens[1];
+    String points = tokens[2];
+    int pointsInt;
+    try {
+      pointsInt = Integer.parseInt(points);
+    } catch (NumberFormatException e) {
+      printError("invalid command, see 'help' for more information");
+      return;
+    }
+    boolean isNewEntry = trie.add(name, pointsInt);
+    if (!isNewEntry) {
+      printError("an entry with the given name already exists");
+    }
+  }
+
+  private static void execChangeCmd(String[] tokens) {
+    if (tokens.length != 3) {
+      printError("invalid command, see 'help' for more information");
+      return;
+    }
+
+    String name = tokens[1];
+    String points = tokens[2];
+    int pointsInt;
+    try {
+      pointsInt = Integer.parseInt(points);
+    } catch (NumberFormatException e) {
+      printError("invalid command, see 'help' for more information");
+      return;
+    }
+    boolean changedEntry = trie.change(name, pointsInt);
+    if (!changedEntry) {
+      printError("an entry with the given name does not exist");
+    }
+  }
+
+  private static void execDeleteCmd(String[] tokens) {
+    if (tokens.length != 2) {
+      printError("invalid command, see 'help' for more information");
+      return;
+    }
+    String name = tokens[1];
+    boolean entryDeleted = trie.remove(name);
+    if (!entryDeleted) {
+      printError("an entry with the given name does not exist");
+    }
+  }
+
+  private static void execPointsCmd(String[] tokens) {
+    if (tokens.length != 2) {
+      printError("invalid command, see 'help' for more information");
+      return;
+    }
+    String name = tokens[1];
+    Integer points = trie.points(name);
+    if (points == null) {
+      printError("an entry with the given name does not exist");
+      return;
+    }
+    System.out.println(points);
+  }
+
+  private static void execTrieCmd() {
+    System.out.println(trie.toString());
+  }
+
+  private static void execHelpCmd() {
+    System.out.println("""
+      new - creates a new trie
+      add <name> <points> - adds a new name with the given points
+      change <name> <points> - changes the points of the given name
+      delete <name> - deletes the given name
+      points <name> - returns the points of the given name
+      trie - prints the trie
+      help - prints this help message
+      quit - quits the program""");
+  }
+
+  private static void printError(String message) {
+    System.out.println("Error!: " + message);
   }
 
 }

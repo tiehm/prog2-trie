@@ -15,7 +15,7 @@ public class Node {
   }
 
   public Node(char ch, Node parent) {
-    this.character = ch;
+    character = ch;
     this.parent = parent;
     parent.setChild(ch, this);
   }
@@ -26,8 +26,8 @@ public class Node {
 
   private void setChild(char ch, Node child) {
     children[calculateArrayPositionByChar(ch)] = child;
-    if (child == null && this.points == null && getChildrenCount() == 0) {
-      this.parent.setChild(this.character, null);
+    if (child == null && points == null && getChildrenCount() == 0) {
+      parent.setChild(character, null);
     }
   }
 
@@ -47,10 +47,10 @@ public class Node {
   }
 
   public void remove() {
-    if (this.isRoot) {
+    if (isRoot) {
       return;
     }
-    this.points = null;
+    points = null;
     cleanup();
   }
 
@@ -58,19 +58,19 @@ public class Node {
     if (getChildrenCount() != 0) {
       return;
     }
-    parent.setChild(this.character, null);
+    parent.setChild(character, null);
   }
 
   @Override
   public String toString() {
     if (getChildrenCount() == 0) {
-      if (this.isRoot) {
+      if (isRoot) {
         return "+";
       }
-      return getCharacter() + "[" + this.points + "]";
+      return getCharacter() + "[" + points + "]";
     }
     StringBuilder sb = new StringBuilder();
-    for (Node child : this.children) {
+    for (Node child : children) {
       if (child != null) {
         sb.append(child.toString());
       }
@@ -88,7 +88,7 @@ public class Node {
 
   private int getChildrenCount() {
     int count = 0;
-    for (Node child : this.children) {
+    for (Node child : children) {
       if (child != null) {
         count++;
       }
@@ -97,10 +97,10 @@ public class Node {
   }
 
   private char getCharacter() {
-    if (this.isRoot) {
+    if (isRoot) {
       return '+';
     }
-    return this.character;
+    return character;
   }
 
 }
