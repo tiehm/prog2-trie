@@ -7,16 +7,16 @@ import java.io.InputStreamReader;
 
 public class Shell {
 
-  private static Trie trie = new Trie();
+  private Trie trie = new Trie();
 
   private Shell() {}
 
   public static void main(String[] args) throws IOException {
     BufferedReader stdin = new BufferedReader(new InputStreamReader(System.in));
-    execute(stdin);
+    new Shell().execute(stdin);
   }
 
-  private static void execute(BufferedReader stdin) throws IOException {
+  private void execute(BufferedReader stdin) throws IOException {
     boolean quit = false;
     while (!quit) {
       System.out.print("trie> ");
@@ -48,11 +48,11 @@ public class Shell {
     }
   }
 
-  private static void execNewCmd() {
+  private void execNewCmd() {
     trie = new Trie();
   }
 
-  private static void execAddCmd(String[] tokens) {
+  private void execAddCmd(String[] tokens) {
     if (tokens.length != 3) {
       printError("invalid command, see 'help' for more information");
       return;
@@ -72,7 +72,7 @@ public class Shell {
     }
   }
 
-  private static void execChangeCmd(String[] tokens) {
+  private void execChangeCmd(String[] tokens) {
     if (tokens.length != 3) {
       printError("invalid command, see 'help' for more information");
       return;
@@ -93,7 +93,7 @@ public class Shell {
     }
   }
 
-  private static void execDeleteCmd(String[] tokens) {
+  private void execDeleteCmd(String[] tokens) {
     if (tokens.length != 2) {
       printError("invalid command, see 'help' for more information");
       return;
@@ -105,7 +105,7 @@ public class Shell {
     }
   }
 
-  private static void execPointsCmd(String[] tokens) {
+  private void execPointsCmd(String[] tokens) {
     if (tokens.length != 2) {
       printError("invalid command, see 'help' for more information");
       return;
@@ -119,11 +119,11 @@ public class Shell {
     System.out.println(points);
   }
 
-  private static void execTrieCmd() {
+  private void execTrieCmd() {
     System.out.println(trie.toString());
   }
 
-  private static void execHelpCmd() {
+  private void execHelpCmd() {
     System.out.println("""
       new - creates a new trie
       add <name> <points> - adds a new name with the given points
@@ -135,7 +135,7 @@ public class Shell {
       quit - quits the program""");
   }
 
-  private static void printError(String message) {
+  private void printError(String message) {
     System.out.println("Error!: " + message);
   }
 

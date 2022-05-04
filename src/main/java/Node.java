@@ -6,13 +6,12 @@ public class Node {
   private Integer points;
   private final Node[] children = new Node[26];
   private Node parent;
-  private boolean isRoot;
+
+  private boolean isRoot() {
+    return parent == null;
+  }
 
   public Node() {}
-
-  public Node(boolean isRoot) {
-    this.isRoot = isRoot;
-  }
 
   public Node(char ch, Node parent) {
     character = ch;
@@ -47,7 +46,7 @@ public class Node {
   }
 
   public void remove() {
-    if (isRoot) {
+    if (isRoot()) {
       return;
     }
     points = null;
@@ -64,7 +63,7 @@ public class Node {
   @Override
   public String toString() {
     if (getChildrenCount() == 0) {
-      if (isRoot) {
+      if (isRoot()) {
         return "+";
       }
       return getCharacter() + "[" + points + "]";
@@ -75,7 +74,7 @@ public class Node {
         sb.append(child.toString());
       }
     }
-    return getCharacter() + "(" + sb.toString() + ")";
+    return getCharacter() + "(" + sb + ")";
   }
 
   public void setPoints(Integer points) {
@@ -97,7 +96,7 @@ public class Node {
   }
 
   private char getCharacter() {
-    if (isRoot) {
+    if (isRoot()) {
       return '+';
     }
     return character;

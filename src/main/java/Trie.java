@@ -2,7 +2,7 @@ package main.java;
 
 public class Trie {
 
-  private final Node root = new Node(true);
+  private final Node root = new Node();
 
   public Trie() {}
 
