@@ -1,0 +1,51 @@
+trie> add alice 10
+trie> add bob 3
+trie> add charlie 5
+trie> trie
++(a(l(i(c(e[10]))))b(o(b[3]))c(h(a(r(l(i(e[5])))))))
+trie> change charlie 100
+trie> trie
++(a(l(i(c(e[10]))))b(o(b[3]))c(h(a(r(l(i(e[100])))))))
+trie> add DANA 10
+Error!: invalid argument for name, names can only be lowercase
+trie> add dana 10
+trie> trie
++(a(l(i(c(e[10]))))b(o(b[3]))c(h(a(r(l(i(e[100]))))))d(a(n(a[10]))))
+trie> add bobby
+Error!: invalid command, see 'help' for more information
+trie> add bobby 10
+trie> trie
++(a(l(i(c(e[10]))))b(o(b[3](b(y[10]))))c(h(a(r(l(i(e[100]))))))d(a(n(a[10]))))
+trie> remove bob
+Error!: invalid command, see 'help' for more information
+trie> delete bob
+trie> trie
++(a(l(i(c(e[10]))))b(o(b(b(y[10]))))c(h(a(r(l(i(e[100]))))))d(a(n(a[10]))))
+trie> ADD eli 1
+trie> delete alice
+trie> delete bob
+trie> DELETE charlie
+trie> DELETE CHARLIE
+Error!: invalid argument for name, names can only be lowercase
+trie> DELETE charlie
+Error!: an entry with the given name does not exist
+trie> trie
++(b(o(b(b(y[10]))))d(a(n(a[10])))e(l(i[1])))
+trie> TRIE
++(b(o(b(b(y[10]))))d(a(n(a[10])))e(l(i[1])))
+trie> new
+trie> trie
++
+trie> points NAME
+Error!: invalid argument for name, names can only be lowercase
+trie> points name
+Error!: an entry with the given name does not exist
+trie> add name
+Error!: invalid command, see 'help' for more information
+trie> add name 10
+trie> points name
+10
+trie> trie
++(n(a(m(e[10]))))
+trie> quit
+
